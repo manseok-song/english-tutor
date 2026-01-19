@@ -1,0 +1,87 @@
+/* AntiGravity 글로벌 스타일 */
+
+:root {
+  --color-blue: #3366E6;
+  --color-green: #33CC66;
+  --color-purple: #9966E6;
+  --color-yellow: #E6CC33;
+  --color-red: #E64D4D;
+  --color-bg: #000000;
+  --color-bg-secondary: #0a0a0a;
+  --color-text: #ffffff;
+  --color-text-secondary: rgba(255, 255, 255, 0.6);
+
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow: hidden;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 버튼 기본 스타일 리셋 */
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 스크롤바 숨김 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* 포커스 아웃라인 */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+/* 애니메이션 */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* iOS Safe Area 패딩 */
+.safe-area-top {
+  padding-top: var(--safe-area-inset-top);
+}
+
+.safe-area-bottom {
+  padding-bottom: var(--safe-area-inset-bottom);
+}
