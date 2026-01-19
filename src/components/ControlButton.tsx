@@ -10,6 +10,7 @@ interface ControlButtonProps {
   voiceState: VoiceState;
   isRecording: boolean;
   onConnect: () => void;
+  onDisconnect?: () => void;
   onStartRecording: () => void;
   onStopRecording: () => void;
 }

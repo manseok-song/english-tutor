@@ -8,9 +8,10 @@ import { VoiceState, Particle, STATE_COLORS, CONSTANTS } from '../types';
 interface ParticleCanvasProps {
   voiceState: VoiceState;
   amplitude: number;
+  isVoiceActive?: boolean;
 }
 
-export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ voiceState, amplitude }) => {
+export const ParticleCanvas: React.FC<ParticleCanvasProps> = ({ voiceState, amplitude, isVoiceActive = false }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const particlesRef = useRef<Particle[]>([]);
   const animationRef = useRef<number>(0);
