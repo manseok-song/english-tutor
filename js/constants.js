@@ -7,10 +7,10 @@ export const Constants = {
     // API 설정
     API: {
         // Gemini WebSocket 엔드포인트
-        GEMINI_WEBSOCKET_URL: 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent',
+        GEMINI_WEBSOCKET_URL: 'wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent',
 
         // Gemini 모델명
-        GEMINI_MODEL: 'models/gemini-2.0-flash-exp',
+        GEMINI_MODEL: 'models/gemini-2.0-flash-live-001',
 
         // 연결 타임아웃 (ms)
         CONNECTION_TIMEOUT: 10000,
