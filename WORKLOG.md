@@ -1,6 +1,6 @@
 # AntiGravity 작업 일지
 
-## 2026-01-20 (오늘)
+## 2026-01-21 (오늘)
 
 ### 완료된 작업
 
@@ -86,7 +86,7 @@ API 버전: v1beta
 ```json
 {
   "setup": {
-    "model": "models/gemini-2.0-flash-live-001",
+    "model": "models/gemini-2.0-flash-exp",
     "generationConfig": {
       "responseModalities": ["AUDIO"],
       "speechConfig": {
@@ -125,4 +125,4 @@ API 버전: v1beta
 
 ---
 
-*최종 업데이트: 2026-01-20*
+*최종 업데이트: 2026-01-21*

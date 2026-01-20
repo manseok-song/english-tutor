@@ -18,6 +18,8 @@ Google Gemini Multimodal Live API를 활용하여 실시간 음성 대화로 비
 - **🎤 실시간 음성 대화**: 마이크 → Gemini AI → 스피커 양방향 스트리밍
 - **⚡ 초저지연**: WebSocket 기반 < 500ms 응답
 - **🔮 Ambient UI**: 상태별 파티클 애니메이션 (Idle/Listening/Speaking)
+- **🌊 파장 시각화**: 음성 감지 시 울렁이는 파장 애니메이션
+- **👋 AI 인사**: 세션 시작 시 AI가 먼저 영어로 인사
 - **👔 CEO 페르소나**: 비즈니스 영어 특화 튜터 (3문장 이내 간결한 응답)
 - **🗣️ Full-duplex**: 사용자가 말을 끊으면 AI 응답 즉시 중단
 
@@ -93,6 +95,7 @@ AntiGravity/
 │   ├── geminiService.js# Gemini WebSocket
 │   ├── vadService.js   # 음성 감지 (VAD)
 │   ├── particleView.js # 파티클 애니메이션
+│   ├── waveView.js     # 파장 시각화
 │   ├── prompts.js      # CEO 페르소나
 │   └── constants.js    # 상수 정의
 └── icons/              # PWA 아이콘
@@ -141,4 +144,4 @@ MIT License
 
 ---
 
-**© 2024 AntiGravity Project**
+**© 2026 AntiGravity Project**
