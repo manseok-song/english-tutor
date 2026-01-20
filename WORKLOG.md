@@ -49,18 +49,29 @@
 - **조치**: 디버그 로그 UI 추가 (모바일 테스트용)
 - **상태**: 디버깅 중
 
+#### 5. 파장 시각화 추가
+- **기능**: 음성 감지 시 울렁이는 파장 애니메이션
+- **파일**: `js/waveView.js` 신규 생성
+- **구현**: Canvas 기반 사인파 조합, 오디오 레벨 연동
+- **상태**: 완료
+
+#### 6. AI 인사 기능 추가
+- **기능**: 세션 시작 시 AI가 먼저 인사
+- **구현**: `geminiService.sendText()` 트리거
+- **상태**: 완료
+
 ### 현재 상태
 
 ```
 배포 URL: https://manseok-song.github.io/english-tutor/
-캐시 버전: antigravity-v4
+캐시 버전: antigravity-v5
 API 버전: v1beta
-모델: gemini-2.0-flash-live-001
+모델: gemini-2.0-flash-exp
 ```
 
 ### 다음 작업
 
-- [ ] WebSocket 연결 안정화
+- [ ] AI 응답 테스트
 - [ ] 오디오 재생 테스트
 - [ ] 모바일 테스트 완료
 - [ ] PWA 아이콘 추가 (192x192, 512x512)

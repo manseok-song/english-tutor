@@ -4,7 +4,7 @@
  * 오프라인 캐싱 및 백그라운드 동기화
  */
 
-const CACHE_NAME = 'antigravity-v4';
+const CACHE_NAME = 'antigravity-v5';
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
@@ -15,6 +15,7 @@ const ASSETS_TO_CACHE = [
     './js/geminiService.js',
     './js/vadService.js',
     './js/particleView.js',
+    './js/waveView.js',
     './js/prompts.js',
     './manifest.json'
 ];

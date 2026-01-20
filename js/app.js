@@ -9,6 +9,7 @@ import { AudioService } from './audioService.js';
 import { GeminiService } from './geminiService.js';
 import { VADService } from './vadService.js';
 import { ParticleView } from './particleView.js';
+import { WaveView } from './waveView.js';
 import { getSystemPrompt } from './prompts.js';
 
 // ===== 디버그 로그 (모바일용) =====
@@ -386,6 +387,7 @@ class AntiGravityApp {
         this.geminiService = new GeminiService();
         this.vadService = new VADService();
         this.particleView = new ParticleView('particleCanvas');
+        this.waveView = new WaveView('waveCanvas');
 
         // 앱 상태
         this.appState = new AppState();
@@ -407,14 +409,21 @@ class AntiGravityApp {
             }
         });
 
-        // 상태 변경 시 파티클 업데이트
+        // 상태 변경 시 파티클 및 파장 업데이트
         this.appState.on('stateChange', (state) => {
             this.particleView.setState(state);
+            this.waveView.setState(state);
         });
 
-        // 오디오 레벨 시 파티클 업데이트
+        // 오디오 레벨 시 파티클 및 파장 업데이트
         this.appState.on('audioLevel', (level) => {
             this.particleView.setAudioLevel(level);
+            this.waveView.setAudioLevel(level);
+        });
+
+        // 사용자 발화 시 파장 활성화
+        this.appState.on('userSpeaking', (speaking) => {
+            this.waveView.setActive(speaking);
         });
 
         // 지연 시간 측정
@@ -510,6 +519,12 @@ class AntiGravityApp {
 
             if (started) {
                 this.appState.setState(Constants.STATE.LISTENING);
+
+                // AI가 먼저 인사하도록 트리거
+                setTimeout(() => {
+                    console.log('[App] AI 인사 요청');
+                    this.geminiService.sendText('Hello! Please greet me briefly in English.');
+                }, 500);
             } else {
                 this.appState.setError('마이크 시작에 실패했습니다');
             }
@@ -647,6 +662,7 @@ class AntiGravityApp {
         this.geminiService.destroy();
         this.vadService.destroy();
         this.particleView.destroy();
+        this.waveView.destroy();
     }
 }
 

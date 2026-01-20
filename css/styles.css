@@ -76,6 +76,25 @@ html, body {
     padding: 20px;
 }
 
+/* ===== 파장 시각화 (Wave Canvas) ===== */
+.wave-canvas {
+    position: absolute;
+    width: 100%;
+    max-width: 400px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -150%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.wave-canvas.active {
+    opacity: 1;
+}
+
 /* ===== 상태 표시 원 (Orb) ===== */
 .status-orb {
     width: 200px;
