@@ -307,16 +307,14 @@ INTERACTION STYLE:
         // Base64 인코딩
         const base64Data = this.arrayBufferToBase64(pcmData.buffer);
 
-        // 실시간 입력 메시지
+        // 실시간 입력 메시지 (Gemini Live API 형식)
         const message = {
             realtimeInput: {
-                mediaChunks: [{
-                    mimeType: 'audio/pcm;rate=16000',
+                audio: {
                     data: base64Data
-                }]
+                }
             }
         };
-        // Note: realtimeInput/mediaChunks uses camelCase per Gemini API spec
 
         this.send(message);
     }
