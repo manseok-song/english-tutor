@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0A0A0A">
+    <meta name="description" content="운전 중인 CEO를 위한 핸즈프리 AI 영어 튜터">
+
+    <title>AntiGravity - AI English Tutor</title>
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- iOS PWA 설정 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AntiGravity">
+
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌌</text></svg>">
+
+    <!-- 스타일시트 -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 파티클 캔버스 (배경) -->
+        <canvas id="particleCanvas"></canvas>
+
+        <!-- 메인 컨텐츠 -->
+        <main class="main-content">
+            <!-- 상태 표시 원 -->
+            <div id="statusOrb" class="status-orb idle">
+                <div class="orb-inner"></div>
+                <div class="orb-glow"></div>
+            </div>
+
+            <!-- 상태 텍스트 -->
+            <div class="status-text">
+                <p id="statusLabel">대기 중</p>
+                <p id="errorMessage" class="error-message hidden"></p>
+            </div>
+
+            <!-- 오디오 레벨 표시 -->
+            <div id="audioLevelContainer" class="audio-level-container hidden">
+                <div id="audioLevelBar" class="audio-level-bar"></div>
+            </div>
+        </main>
+
+        <!-- 하단 컨트롤 -->
+        <footer class="controls">
+            <button id="startButton" class="control-button">
+                <span class="button-icon">🎤</span>
+                <span class="button-text">시작</span>
+            </button>
+
+            <!-- 설정 버튼 -->
+            <button id="settingsButton" class="settings-button" aria-label="설정">
+                ⚙️
+            </button>
+        </footer>
+
+        <!-- 설정 모달 -->
+        <div id="settingsModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>설정</h2>
+
+                <div class="setting-group">
+                    <label for="apiKeyInput">Gemini API Key</label>
+                    <input type="password" id="apiKeyInput" placeholder="API 키를 입력하세요">
+                    <p class="setting-hint">
+                        <a href="https://aistudio.google.com/apikey" target="_blank">API 키 발급받기 →</a>
+                    </p>
+                </div>
+
+                <div class="setting-group">
+                    <label for="vadThreshold">음성 감지 민감도</label>
+                    <input type="range" id="vadThreshold" min="0" max="100" value="50">
+                    <span id="vadThresholdValue">50</span>
+                </div>
+
+                <div class="modal-actions">
+                    <button id="saveSettings" class="btn-primary">저장</button>
+                    <button id="closeSettings" class="btn-secondary">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Service Worker 등록 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(reg => console.log('[PWA] Service Worker 등록됨'))
+                    .catch(err => console.warn('[PWA] Service Worker 등록 실패:', err));
+            });
+        }
+    </script>
+
+    <!-- JavaScript 모듈 -->
+    <script type="module" src="js/app.js"></script>
+</body>
+</html>

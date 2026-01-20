@@ -1,0 +1,418 @@
+/*
+ * AntiGravity - 스타일시트
+ * 운전 중인 CEO를 위한 핸즈프리 AI 영어 튜터
+ */
+
+/* ===== CSS 변수 (테마) ===== */
+:root {
+    /* 색상 */
+    --bg-color: #0A0A0A;
+    --text-color: #FFFFFF;
+    --text-secondary: #A0A0A0;
+
+    /* 상태 색상 */
+    --idle-color: #3B82F6;
+    --listening-color: #22C55E;
+    --speaking-color: #8B5CF6;
+    --error-color: #EF4444;
+    --connecting-color: #6B7280;
+
+    /* UI */
+    --button-bg: rgba(59, 130, 246, 0.8);
+    --button-hover: rgba(59, 130, 246, 1);
+    --modal-bg: rgba(20, 20, 20, 0.95);
+    --border-color: rgba(255, 255, 255, 0.1);
+
+    /* 애니메이션 */
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.5s ease;
+}
+
+/* ===== 리셋 & 기본 설정 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+/* ===== 앱 컨테이너 ===== */
+#app {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* ===== 파티클 캔버스 ===== */
+#particleCanvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+/* ===== 메인 컨텐츠 ===== */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    padding: 20px;
+}
+
+/* ===== 상태 표시 원 (Orb) ===== */
+.status-orb {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-medium);
+}
+
+.orb-inner {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%,
+        rgba(255, 255, 255, 0.1) 0%,
+        transparent 60%);
+    border: 2px solid currentColor;
+    transition: var(--transition-medium);
+}
+
+.orb-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    filter: blur(30px);
+    opacity: 0.4;
+    transition: var(--transition-medium);
+}
+
+/* 상태별 색상 */
+.status-orb.idle {
+    color: var(--idle-color);
+}
+.status-orb.idle .orb-glow {
+    background: var(--idle-color);
+}
+
+.status-orb.connecting {
+    color: var(--connecting-color);
+}
+.status-orb.connecting .orb-glow {
+    background: var(--connecting-color);
+    animation: pulse 1.5s infinite;
+}
+
+.status-orb.listening {
+    color: var(--listening-color);
+}
+.status-orb.listening .orb-glow {
+    background: var(--listening-color);
+}
+
+.status-orb.speaking {
+    color: var(--speaking-color);
+}
+.status-orb.speaking .orb-glow {
+    background: var(--speaking-color);
+    animation: speakingPulse 0.8s infinite;
+}
+
+.status-orb.error {
+    color: var(--error-color);
+}
+.status-orb.error .orb-glow {
+    background: var(--error-color);
+}
+
+/* ===== 상태 텍스트 ===== */
+.status-text {
+    margin-top: 40px;
+    text-align: center;
+}
+
+#statusLabel {
+    font-size: 1.5rem;
+    font-weight: 500;
+    transition: var(--transition-fast);
+}
+
+.error-message {
+    font-size: 0.875rem;
+    color: var(--error-color);
+    margin-top: 10px;
+    opacity: 0.8;
+}
+
+/* ===== 오디오 레벨 바 ===== */
+.audio-level-container {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 20px;
+    overflow: hidden;
+}
+
+.audio-level-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--listening-color), var(--speaking-color));
+    border-radius: 2px;
+    transition: width 0.1s ease;
+}
+
+/* ===== 하단 컨트롤 ===== */
+.controls {
+    padding: 20px;
+    padding-bottom: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    z-index: 1;
+}
+
+.control-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 40px;
+    background: var(--button-bg);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.control-button:hover {
+    background: var(--button-hover);
+    transform: scale(1.02);
+}
+
+.control-button:active {
+    transform: scale(0.98);
+}
+
+.control-button.active {
+    background: var(--error-color);
+}
+
+.control-button.active .button-text::after {
+    content: '종료';
+}
+
+.control-button.active .button-icon::after {
+    content: '⏹️';
+}
+
+.button-icon {
+    font-size: 1.3rem;
+}
+
+.settings-button {
+    position: absolute;
+    right: 20px;
+    bottom: 40px;
+    width: 48px;
+    height: 48px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.settings-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== 모달 ===== */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: var(--modal-bg);
+    border-radius: 16px;
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+}
+
+.modal-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+}
+
+.setting-group {
+    margin-bottom: 20px;
+}
+
+.setting-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.setting-group input[type="password"],
+.setting-group input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+}
+
+.setting-group input[type="range"] {
+    width: calc(100% - 40px);
+    margin-right: 10px;
+}
+
+.setting-hint {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-top: 8px;
+}
+
+.setting-hint a {
+    color: var(--idle-color);
+    text-decoration: none;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.btn-primary {
+    flex: 1;
+    padding: 12px;
+    background: var(--idle-color);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    flex: 1;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* ===== 유틸리티 ===== */
+.hidden {
+    display: none !important;
+}
+
+/* ===== 애니메이션 ===== */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes speakingPulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.2);
+    }
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 480px) {
+    .status-orb {
+        width: 160px;
+        height: 160px;
+    }
+
+    .orb-inner {
+        width: 144px;
+        height: 144px;
+    }
+
+    #statusLabel {
+        font-size: 1.25rem;
+    }
+
+    .control-button {
+        padding: 14px 32px;
+        font-size: 1rem;
+    }
+}
+
+/* ===== 세이프 에어리어 (노치 대응) ===== */
+@supports (padding-top: env(safe-area-inset-top)) {
+    body {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
+        padding-right: env(safe-area-inset-right);
+    }
+}
