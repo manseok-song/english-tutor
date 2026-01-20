@@ -4,19 +4,19 @@
  * 오프라인 캐싱 및 백그라운드 동기화
  */
 
-const CACHE_NAME = 'antigravity-v2';
+const CACHE_NAME = 'antigravity-v3';
 const ASSETS_TO_CACHE = [
-    '/',
-    '/index.html',
-    '/css/styles.css',
-    '/js/app.js',
-    '/js/constants.js',
-    '/js/audioService.js',
-    '/js/geminiService.js',
-    '/js/vadService.js',
-    '/js/particleView.js',
-    '/js/prompts.js',
-    '/manifest.json'
+    './',
+    './index.html',
+    './css/styles.css',
+    './js/app.js',
+    './js/constants.js',
+    './js/audioService.js',
+    './js/geminiService.js',
+    './js/vadService.js',
+    './js/particleView.js',
+    './js/prompts.js',
+    './manifest.json'
 ];
 
 // 설치 이벤트 - 에셋 캐싱
@@ -99,7 +99,7 @@ self.addEventListener('fetch', (event) => {
                         }
                         // HTML 요청인 경우 index.html 반환
                         if (event.request.destination === 'document') {
-                            return caches.match('/index.html');
+                            return caches.match('./index.html');
                         }
                         return null;
                     });

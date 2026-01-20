@@ -223,14 +223,6 @@ html, body {
     background: var(--error-color);
 }
 
-.control-button.active .button-text::after {
-    content: '종료';
-}
-
-.control-button.active .button-icon::after {
-    content: '⏹️';
-}
-
 .button-icon {
     font-size: 1.3rem;
 }

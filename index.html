@@ -91,7 +91,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js')
+                navigator.serviceWorker.register('./sw.js')
                     .then(reg => console.log('[PWA] Service Worker 등록됨'))
                     .catch(err => console.warn('[PWA] Service Worker 등록 실패:', err));
             });

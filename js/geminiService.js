@@ -153,17 +153,17 @@ export class GeminiService {
         const setupMessage = {
             setup: {
                 model: Constants.API.GEMINI_MODEL,
-                generation_config: {
-                    response_modalities: ['AUDIO'],
-                    speech_config: {
-                        voice_config: {
-                            prebuilt_voice_config: {
-                                voice_name: 'Aoede'  // 여성 영어 음성
+                generationConfig: {
+                    responseModalities: ['AUDIO'],
+                    speechConfig: {
+                        voiceConfig: {
+                            prebuiltVoiceConfig: {
+                                voiceName: 'Aoede'  // 여성 영어 음성
                             }
                         }
                     }
                 },
-                system_instruction: {
+                systemInstruction: {
                     parts: [{
                         text: this.getSystemPrompt()
                     }]
@@ -316,6 +316,7 @@ INTERACTION STYLE:
                 }]
             }
         };
+        // Note: realtimeInput/mediaChunks uses camelCase per Gemini API spec
 
         this.send(message);
     }
