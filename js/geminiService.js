@@ -126,7 +126,22 @@ export class GeminiService {
         };
 
         this.websocket.onclose = (event) => {
-            console.log('[GeminiService] WebSocket 연결 종료:', event.code, event.reason);
+            // 상세한 종료 코드 해석
+            const closeCodeMessages = {
+                1000: '정상 종료',
+                1001: '서버 종료',
+                1002: '프로토콜 오류',
+                1003: '지원하지 않는 데이터',
+                1006: '비정상 종료 (네트워크 문제)',
+                1007: '잘못된 데이터',
+                1008: '정책 위반',
+                1009: '메시지 크기 초과',
+                1011: '서버 내부 오류',
+                1015: 'TLS 핸드셰이크 실패'
+            };
+            const codeMsg = closeCodeMessages[event.code] || `알 수 없는 코드(${event.code})`;
+            console.error(`[GeminiService] 연결 종료: ${codeMsg}, reason: ${event.reason || '없음'}`);
+
             this.isConnected = false;
             this.isSetupComplete = false;
 

@@ -11,6 +11,71 @@ import { VADService } from './vadService.js';
 import { ParticleView } from './particleView.js';
 import { getSystemPrompt } from './prompts.js';
 
+// ===== 디버그 로그 (모바일용) =====
+class DebugLogger {
+    constructor() {
+        this.logElement = document.getElementById('debugLog');
+        this.maxLogs = 50;
+        this.logs = [];
+        this.enabled = true;  // 디버그 모드 활성화
+
+        // 원본 console 메서드 저장
+        this.originalConsole = {
+            log: console.log.bind(console),
+            error: console.error.bind(console),
+            warn: console.warn.bind(console)
+        };
+
+        // console 오버라이드
+        if (this.enabled && this.logElement) {
+            this.overrideConsole();
+            this.logElement.classList.add('visible');
+        }
+    }
+
+    overrideConsole() {
+        console.log = (...args) => {
+            this.originalConsole.log(...args);
+            this.addLog('log', args);
+        };
+        console.error = (...args) => {
+            this.originalConsole.error(...args);
+            this.addLog('error', args);
+        };
+        console.warn = (...args) => {
+            this.originalConsole.warn(...args);
+            this.addLog('warn', args);
+        };
+    }
+
+    addLog(type, args) {
+        if (!this.logElement) return;
+
+        const message = args.map(arg =>
+            typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+        ).join(' ');
+
+        const entry = document.createElement('div');
+        entry.className = `log-entry log-${type}`;
+        entry.textContent = `${new Date().toLocaleTimeString()}: ${message}`;
+
+        this.logElement.appendChild(entry);
+        this.logs.push(entry);
+
+        // 최대 로그 수 제한
+        while (this.logs.length > this.maxLogs) {
+            const old = this.logs.shift();
+            old.remove();
+        }
+
+        // 스크롤 아래로
+        this.logElement.scrollTop = this.logElement.scrollHeight;
+    }
+}
+
+// 디버그 로거 인스턴스
+let debugLogger = null;
+
 // ===== 앱 상태 관리 =====
 class AppState {
     constructor() {
@@ -587,6 +652,9 @@ class AntiGravityApp {
 
 // DOM 로드 후 앱 시작
 document.addEventListener('DOMContentLoaded', () => {
+    // 디버그 로거 초기화 (모바일 테스트용)
+    debugLogger = new DebugLogger();
+
     window.app = new AntiGravityApp();
 });
 

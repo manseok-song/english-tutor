@@ -399,6 +399,42 @@ html, body {
     }
 }
 
+/* ===== 디버그 로그 ===== */
+.debug-log {
+    position: fixed;
+    bottom: 100px;
+    left: 10px;
+    right: 10px;
+    max-height: 150px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 10px;
+    font-family: monospace;
+    font-size: 0.7rem;
+    color: #00ff00;
+    z-index: 50;
+    display: none;
+}
+
+.debug-log.visible {
+    display: block;
+}
+
+.debug-log .log-entry {
+    margin-bottom: 4px;
+    word-break: break-all;
+}
+
+.debug-log .log-error {
+    color: #ff4444;
+}
+
+.debug-log .log-warn {
+    color: #ffaa00;
+}
+
 /* ===== 세이프 에어리어 (노치 대응) ===== */
 @supports (padding-top: env(safe-area-inset-top)) {
     body {
